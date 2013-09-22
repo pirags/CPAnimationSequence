@@ -7,6 +7,9 @@
 /** Generic block type */
 typedef void (^CPAnimationStepBlock)(void);
 
+/** Completion block */
+typedef void (^CPAnimationCompletionBlock)();
+
 /** Backwards-compatibility */
 typedef CPAnimationStepBlock AnimationStep __deprecated;
 
@@ -38,6 +41,7 @@ typedef CPAnimationStepBlock AnimationStep __deprecated;
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic, copy) CPAnimationStepBlock step;
 @property (nonatomic) UIViewAnimationOptions options;
+@property (nonatomic, copy) CPAnimationCompletionBlock completion;
 
 #pragma mark - execution
 

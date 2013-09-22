@@ -70,6 +70,11 @@
 	}
 	if (![self.consumableSteps count]) { // recursion anchor
 		self.consumableSteps = nil;
+
+        if (self.completion) {
+            self.completion();
+        }
+
 		return; // we're done
 	}
 	CPAnimationStepBlock completionStep = ^{

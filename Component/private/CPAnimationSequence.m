@@ -28,19 +28,34 @@
 		while ((aStep = va_arg(args, CPAnimationStep*))) {
 			[tempSteps insertObject:aStep atIndex:0];
 		}
+
+        instance.completion = nil;
 		instance.steps = [NSArray arrayWithArray:tempSteps];
 		va_end(args);
 	}
 	return instance;
 }
 
--(void) cancel
-{
+- (void) cancel {
     [ super cancel ];
-    for( CPAnimationStep* currentStep in self.steps )
-    {
+    for( CPAnimationStep* currentStep in self.steps ) {
         [ currentStep cancel ];
     }
+}
+
++ (id) sequenceWithSteps:(NSArray *)steps completion:(CPAnimationCompletionBlock)completion {
+	CPAnimationSequence* instance = [[self alloc] init];
+	if (instance) {
+		NSMutableArray* tempSteps = [NSMutableArray array];
+        for (id step in steps) {
+            NSAssert([step isKindOfClass:[CPAnimationStep class]], @"CPAnimationSequence takes CPAnimationStep objects only");
+            [tempSteps addObject:step];
+        }
+
+        instance.completion = completion;
+		instance.steps = [NSArray arrayWithArray:tempSteps];
+	}
+	return instance;
 }
 
 #pragma mark - property override
